@@ -32,14 +32,19 @@ $(document).ready(function() {
       $('#send-message').focus();
     });
   });
+  socket.on('leaveRoom',function(result){
+    var newElement = $('<div></div>').text(result.user+" has closed the app.");
+    $('#messages').append(newElement);
+  });
   setInterval(function() { 
     socket.emit('rooms');
-  }, 1000);
+  }, 10);
   $('#send-message').focus();
   $('#send-form').submit(function() {
     processUserInput(chatApp, socket);
     return false;
   });
+  
 });
 
 function processUserInput(chatApp, socket) {
